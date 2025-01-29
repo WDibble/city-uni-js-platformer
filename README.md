@@ -1,6 +1,7 @@
 # 🎮 2D Java Platformer Demo
 <div align="center">
-![Game Preview](https://github.com/WDibble/choose-adventure-game/blob/main/src/assets/preview.gif)
+
+![Game Preview](/gitAssets/preview.png)
 
 A classic-style 2D platformer built with Java and the CityEngine physics framework.
 
