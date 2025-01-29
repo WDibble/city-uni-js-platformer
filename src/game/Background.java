@@ -108,12 +108,20 @@ public class Background extends UserView {
     @Override
     protected void paintForeground(Graphics2D g) {
         super.paintForeground(g);
+        // Enable anti-aliasing
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, 
+                           RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                           RenderingHints.VALUE_ANTIALIAS_ON);
         //When level is 0, show the tutorial screen to teach the player how the game works.
         if (Game.level == 0) {
             if (usernameEntered) {
-                //Instructions for player on first load.
-                g.setFont(new Font("Arial", Font.PLAIN, 30));
-                g.drawString("Will's Game", 20, 40);
+                // Make the title glow
+                drawGlowingText(g, "Will's Game", 20, 40);
+                
+                // Regular text
+                g.setFont(new Font("Arial", Font.BOLD, 32));
+                g.setColor(Color.WHITE);
                 g.drawString("Collect 10 Points In Each Level To Progress", 20, 80);
                 g.drawString("Enemy Collisions Will Damage Your Health", 20, 120);
                 g.drawString("Use WASD To Control Your Character", 20, 160);
@@ -164,13 +172,25 @@ public class Background extends UserView {
         else {
             g.drawImage(fg, -200, -400, 1522, 650, this);
 
-            g.setFont(new Font("Arial", Font.PLAIN, 30));
-            g.drawString("SCORE: " + Player1.getCoinCount() + "/10", (getWidth() / 2) - 55, 40);
+            // HUD elements (score, health etc)
+            Font hudFont = new Font("Arial", Font.BOLD, 20);
+            g.setFont(hudFont);
+            // Center align text
+            FontMetrics metrics = g.getFontMetrics(g.getFont());
+            int textWidth = metrics.stringWidth("SCORE: " + Player1.getCoinCount() + "/10");
+            int x = (getWidth() - textWidth) / 2;
+            // Consistent padding
+            int padding = 20;
+            g.drawString("SCORE: " + Player1.getCoinCount() + "/10", padding, padding);
 
             if (Player1.getHealthCount() == 0) {
                 g.drawString("HEALTH: " + (Player1.getHealthCount() + 1), 20, 750);
             } else {
-                g.drawString("HEALTH: " + Player1.getHealthCount(), 20, 750);
+                if (Player1.getHealthCount() < 25) {
+                    drawGlowingText(g, "HEALTH: " + Player1.getHealthCount(), 20, 750);
+                } else {
+                    g.drawString("HEALTH: " + Player1.getHealthCount(), 20, 750);
+                }
             }
 
             g.drawImage(health, 20, 775, (Player1.getHealthCount() * 5) + 20, 5, this);
@@ -204,7 +224,9 @@ public class Background extends UserView {
 
                 if (Game.level == 2) {
 
-                    g.setFont(new Font("Arial", Font.PLAIN, 20));
+                    // Regular game text  
+                    Font gameFont = new Font("Arial", Font.PLAIN, 24);
+                    g.setFont(gameFont);
                     g.drawString("Use SPACEBAR To Fire Bullets To Kill Enemies!", 20, 145);
                 }
 
@@ -233,6 +255,11 @@ public class Background extends UserView {
                 }
             }
 
+            // Make level completion message glow
+            if (Player1.getCoinCount() == 10) {
+                drawGlowingText(g, "Level Complete!", getWidth()/2 - 100, getHeight()/2);
+            }
+
         }
 
     }
@@ -244,6 +271,15 @@ public class Background extends UserView {
         public void actionPerformed(ActionEvent e) {
 
         }
+    }
+
+    // Glowing effect for level complete etc
+    private void drawGlowingText(Graphics2D g, String text, int x, int y) {
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);
+        g.setComposite(ac);
+        g.setColor(Color.YELLOW);
+        g.drawString(text, x-1, y-1);
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
     }
 
 }

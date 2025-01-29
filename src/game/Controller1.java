@@ -74,16 +74,12 @@ public class Controller1 extends KeyAdapter {
         } else if (code == KeyEvent.VK_W) { // W = jump
             Vec2 v = body.getLinearVelocity();
 
-            // only jump if body is not already jumping
+            // only jump if body is nearly stationary vertically
             if (Math.abs(v.y) < 0.01f) {
                 body.jump(JUMPING_SPEED);
                 body.removeAllImages();
                 body.addImage(Player1.playerJump);
                 jumpSound.play();
-
-            } else if (Math.abs(v.y) > 0.01f) {
-                body.removeAllImages();
-                body.addImage(Player1.imageIdleRight);
             }
         } else if (code == KeyEvent.VK_A) {
             body.startWalking(-WALKING_SPEED); // A = walk left

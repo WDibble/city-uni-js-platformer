@@ -71,7 +71,7 @@ public abstract class GameLevel extends World {
         //Initialise Player 1
         p1 = new Player1(this);
         p1.setPosition(startPosition());
-        p1.setGravityScale(5);
+        p1.setGravityScale(5); 
 
         //Initialise Enemy
         if (Game.level == 1) {

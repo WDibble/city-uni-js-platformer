@@ -75,6 +75,7 @@ public class Game {
         // give keyboard focus to the frame whenever the mouse enters the view
         view.addMouseListener(new GiveFocus(frame));
 
+        // In Game constructor, store single controller instance
         controller = new Controller1(world.getPlayer(), world);
         frame.addKeyListener(controller);
 
@@ -86,9 +87,6 @@ public class Game {
         wideView.setZoom(4);
         wideView.setBackground(skyColour);
         frame.add(wideView, BorderLayout.SOUTH);*/
-
-        // make the main view track the bird
-        world.addStepListener(new Tracker(view, world.getPlayer()));
 
         // start!
         world.start();
@@ -143,6 +141,9 @@ public class Game {
      */
     public void goNextLevel() {
 
+        // Store old tracker to remove
+        Tracker oldTracker = new Tracker(view, world.getPlayer());
+        world.removeStepListener(oldTracker);
 
         int xHealth = Player1.getHealthCount();
         //int yCoin = Player1.getCoinCount();

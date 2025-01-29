@@ -32,6 +32,23 @@ public class ControlPanel {
      * @param game the game.
      */
     public ControlPanel(Game game) {
+        // Initialize panel
+        mainPanel = new JPanel();
+        
+        // Initialize buttons
+        quitButton = new JButton("Quit");
+        resetButton = new JButton("Reset");
+        pauseButton = new JButton("Pause");
+        scoreboard = new JButton("Scoreboard"); 
+        save = new JButton("Save");
+
+        // Add buttons to panel
+        mainPanel.add(quitButton);
+        mainPanel.add(resetButton);
+        mainPanel.add(pauseButton);
+        mainPanel.add(scoreboard);
+        mainPanel.add(save);
+
         quitButton.addActionListener(new ActionListener() {
             /**
              * Quits the Game.
