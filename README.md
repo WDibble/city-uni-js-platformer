@@ -33,7 +33,7 @@ A challenging 2D platformer featuring precise physics-based movement, collectibl
 ### Core Classes
 ```
 game/
-├── Game.java          # Main game initialization
+├── Game.java          # Main game initialisation
 ├── GameLevel.java     # Level management
 ├── Player1.java       # Player mechanics
 ├── Background.java    # Graphics rendering
